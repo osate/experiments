@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Awasmethods
+Bundle-SymbolicName: org.osate.isse.verificationmethods;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.osate.isse.verificationmethods.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.osate.pluginsupport;bundle-version="1.0.0",
+ org.sireum.aadl.osate;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: edu.cmu.sei.isse.awasmethods
+Bundle-ActivationPolicy: lazy
+Export-Package: org.osate.isse.verificationmethods
+Bundle-ClassPath: lib/awas.jar,
+ .
