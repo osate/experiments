@@ -34,7 +34,12 @@
  */
 package org.osate.isse.verificationmethods;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.osate.aadl2.instance.ComponentInstance;
+import org.osgi.framework.Bundle;
 import org.sireum.aadl.osate.util.Util;
 import org.sireum.awas.AADLBridge.AadlHandler;
 import org.sireum.awas.ast.Model;
@@ -46,11 +51,25 @@ import org.sireum.awas.symbol.SymbolTable;
 import org.sireum.util.ConsoleTagReporter;
 
 public class AwasMethods {
+	private static final String BUNDLE_NAME;
+	private static final ILog LOG;
+	
+	static {
+		Bundle bundle = Activator.getContext().getBundle();
+		BUNDLE_NAME = bundle.getSymbolicName();
+		LOG = Platform.getLog(bundle);
+	}
+	
 	public boolean isQueryEmpty(ComponentInstance component, String query) {
-		Model awasModel = AadlHandler.buildAwasModel(Util.getAir(component));
-		SymbolTable symbolTable = SymbolTable.apply(awasModel, new ConsoleTagReporter());
-		FlowGraph<FlowNode, FlowEdge<FlowNode>> flowGraph = FlowGraph.apply(awasModel, symbolTable);
-		return new AwasGraphImpl(flowGraph, symbolTable).queryEvaluator(query).isEmpty();
+		try {
+			Model awasModel = AadlHandler.buildAwasModel(Util.getAir(component));
+			SymbolTable symbolTable = SymbolTable.apply(awasModel, new ConsoleTagReporter());
+			FlowGraph<FlowNode, FlowEdge<FlowNode>> flowGraph = FlowGraph.apply(awasModel, symbolTable);
+			return new AwasGraphImpl(flowGraph, symbolTable).queryEvaluator(query).isEmpty();
+		} catch (Throwable e) {
+			LOG.log(new Status(IStatus.ERROR, BUNDLE_NAME, "Awas exception for query: " + query, e));
+			throw e;
+		}
 	}
 
 	public boolean isQueryNotEmpty(ComponentInstance component, String query) {
