@@ -47,9 +47,9 @@ import org.sireum.awas.AADLBridge.AadlHandler;
 import org.sireum.awas.ast.Model;
 import org.sireum.awas.awasfacade.AwasGraphImpl;
 import org.sireum.awas.awasfacade.Collector;
-import org.sireum.awas.fptc.FlowEdge;
-import org.sireum.awas.fptc.FlowGraph;
-import org.sireum.awas.fptc.FlowNode;
+import org.sireum.awas.flow.FlowEdge;
+import org.sireum.awas.flow.FlowGraph;
+import org.sireum.awas.flow.FlowNode;
 import org.sireum.awas.symbol.SymbolTable;
 import org.sireum.util.ConsoleTagReporter;
 
